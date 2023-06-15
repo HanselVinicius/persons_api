@@ -1,7 +1,7 @@
 import database from '../models';
 
 
-class Services {
+class GenericDao {
     constructor(modelName){
         this.modelName = modelName;
     }
@@ -18,3 +18,5 @@ class Services {
 
 
 }
+
+export default GenericDao
