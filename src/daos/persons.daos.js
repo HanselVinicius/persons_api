@@ -37,6 +37,36 @@ static async insereRegistro(body){
     }
 }
 
+static async trocaRegistro(cpf,body){
+    try {
+        let result = await person.findOneAndReplace({cpf:cpf},body)
+        return result;
+    } catch (err) {
+        console.log(`ERROR INSERTING DATA: ${err}`)
+        return err
+    }
+}
+
+static async deletaRegistro(cpf){
+    try {
+        let result = await person.findOneAndDelete({cpf:cpf})
+        return result;
+    } catch (err) {
+        console.log(`ERROR INSERTING DATA: ${err}`)
+        return err
+    }
+}
+
+static async softDelete(cpf){
+    try {
+        let result = await person.findOneAndUpdate({cpf:cpf},{isDeleted:true})
+        return result;
+    } catch (err) {
+        console.log(`ERROR INSERTING DATA: ${err}`)
+        return err
+    }
+}
+
 
 }
 
