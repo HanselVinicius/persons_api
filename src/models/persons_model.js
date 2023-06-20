@@ -1,42 +1,43 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../data/sql/connection_config.js";
+import mongoose from "mongoose";
 
 
-const Person = sequelize.define(
-    'persons_tb',{
-        nome:{
-            type: DataTypes.STRING,
-            allowNull:false
-        },
-        idade: {
-            type:DataTypes.INTEGER,
-            allowNull:false
-        },
-        data_de_nascimento: {
-            type:DataTypes.DATE,
-            allowNull:false
-        },
-        id_endereco: {
-            type:DataTypes.INTEGER,
-            allowNull:false,
-            references:{
-                model:'endereco_tb',
-                key: 'id'
-            }
-        }, 
-        cpf:{
-            type: DataTypes.STRING,
-            allowNull:false
-        },
-        isDeleted:{
-            type: DataTypes.BOOLEAN,
-            allowNull:false
-        }
+const schema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    default: () => new mongoose.Types.ObjectId(),
+  },
+  data_de_nascimento: {
+    type: Date,
+    required: true
+  },
+  idade: {
+    type: Number,
+    required: true
+  },
+  nome: {
+    type: String,
+    required: true
+  },
+  endereco: {
+    type: Object
+  },
+  cpf: {
+    type: String,
+    required: true
+  },
+  telefone: {
+    type: String,
+    required: true
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  }
+},{
+  versionKey:false
+}   );
 
+const person = mongoose.model('persons', schema);
 
-
-    }
-)
-
-
-export default Person;
+export default person;
