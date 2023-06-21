@@ -28,7 +28,8 @@ static async pegaUmRegistro(cpf){
 
 static async insereRegistro(body){
     try {
-        let data_to_save = new person(body) 
+        let data_to_save = new person(body)
+        data_to_save['cpf'] = data_to_save['cpf'].replaceAll('.','').replace('-','')
         const result = data_to_save.save()
         return result;
     } catch (err) {
@@ -39,7 +40,9 @@ static async insereRegistro(body){
 
 static async trocaRegistro(cpf,body){
     try {
-        let result = await person.findOneAndReplace({cpf:cpf},body)
+        let data_to_save = body
+        data_to_save['cpf'] = data_to_save['cpf'].replaceAll('.','').replace('-','')
+        let result = await person.findOneAndReplace({cpf:cpf},data_to_save)
         return result;
     } catch (err) {
         console.log(`ERROR INSERTING DATA: ${err}`)

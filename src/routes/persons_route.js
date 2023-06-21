@@ -30,7 +30,7 @@ router.post("/v1/pessoas",async(req,res)=>{
     try {
         const novaPessoa = req.body    
      if(!cpfRegex.test(novaPessoa['cpf'])){
-        res.status(202).send({message:"CPF INVALIDO"})
+        res.status(406).send({message:"CPF INVALIDO"})
         return
     } 
 
@@ -46,6 +46,11 @@ router.post("/v1/pessoas",async(req,res)=>{
 
 router.put("/v1/pessoas/:cpf",async(req,res)=>{
     try {
+        const body = req.body
+        if(!cpfRegex.test(body['cpf'])){
+            res.status(406).send({message:"CPF INVALIDO"})
+            return
+        } 
         let data = Persons_dao.trocaRegistro(req.params.cpf,req.body)
         res.status(202).send(await data)
     } catch (err) {
